@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 
 void merge(int list[], int l, int m, int r)
 {
@@ -12,10 +11,13 @@ void merge(int list[], int l, int m, int r)
 
   /* Copy data to temp arrays L[] and R[] */
   for (i = 0; i < n1; i++)
-      L[i] = arr[l + i];
+  {
+      L[i] = list[l + i];
+  }
   for (j = 0; j < n2; j++)
-      R[j] = arr[m + 1+ j];
-
+  {
+      R[j] = list[m + 1+ j];
+  }
   /* Merge the temp arrays back into arr[l..r]*/
   i = 0; // Initial index of first subarray
   j = 0; // Initial index of second subarray
@@ -24,12 +26,12 @@ void merge(int list[], int l, int m, int r)
   {
       if (L[i] <= R[j])
       {
-          arr[k] = L[i];
+          list[k] = L[i];
           i++;
       }
       else
       {
-          arr[k] = R[j];
+          list[k] = R[j];
           j++;
       }
       k++;
@@ -39,7 +41,7 @@ void merge(int list[], int l, int m, int r)
      are any */
   while (i < n1)
   {
-      arr[k] = L[i];
+      list[k] = L[i];
       i++;
       k++;
   }
@@ -48,7 +50,7 @@ void merge(int list[], int l, int m, int r)
      are any */
   while (j < n2)
   {
-      arr[k] = R[j];
+      list[k] = R[j];
       j++;
       k++;
   }
@@ -60,7 +62,7 @@ void mergesort(int list[], int l, int r){
     int m = (l+r)/2;
     mergesort(list, l , m);
     mergesort(list, m+1, r);
-    merge(list, l,m,r);
+    merge(list, l, m, r);
   }
 }
 
