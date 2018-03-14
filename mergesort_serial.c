@@ -1,69 +1,70 @@
 #include <stdio.h>
 
-void merge(int list[], int l, int m, int r)
+void merge(int arr[], int l, int m, int r)
 {
-  int i, j, k;
-  int n1 = m - l + 1;
-  int n2 =  r - m;
+    int i, j, k;
+    int n1 = m - l + 1;
+    int n2 =  r - m;
 
-  /* create temp arrays */
-  int L[n1], R[n2];
+    int L[n1], R[n2]; //temp arrays for left and right
 
-  /* Copy data to temp arrays L[] and R[] */
-  for (i = 0; i < n1; i++)
-  {
-      L[i] = list[l + i];
-  }
-  for (j = 0; j < n2; j++)
-  {
-      R[j] = list[m + 1+ j];
-  }
-  /* Merge the temp arrays back into arr[l..r]*/
-  i = 0; // Initial index of first subarray
-  j = 0; // Initial index of second subarray
-  k = l; // Initial index of merged subarray
-  while (i < n1 && j < n2)
-  {
-      if (L[i] <= R[j])
-      {
-          list[k] = L[i];
-          i++;
-      }
-      else
-      {
-          list[k] = R[j];
-          j++;
-      }
-      k++;
-  }
+    for (i = 0; i < n1; i++) // copy elems
+        L[i] = arr[l + i];
 
-  /* Copy the remaining elements of L[], if there
-     are any */
-  while (i < n1)
-  {
-      list[k] = L[i];
-      i++;
-      k++;
-  }
+    for (j = 0; j < n2; j++)
+        R[j] = arr[m + 1+ j];
 
-  /* Copy the remaining elements of R[], if there
-     are any */
-  while (j < n2)
-  {
-      list[k] = R[j];
-      j++;
-      k++;
-  }
+    i = 0; // index of 1st array
+    j = 0; // index of 2nd array
+    k = l; // index of merged array
+    while (i < n1 && j < n2)
+    {
+        if (L[i] <= R[j])
+        {
+            arr[k] = L[i];
+            i++;
+        }
+        else
+        {
+            arr[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+
+    // remaining elements of L[]
+    while (i < n1)
+    {
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+
+    // remaining elements of R[]
+    while (j < n2)
+    {
+        arr[k] = R[j];
+        j++;
+        k++;
+    }
 }
 
 void mergesort(int list[], int l, int r){
-  if(r > l)
+  if(l <r)
   {
-    int m = (l+r)/2;
+    int m = l + (r-l)/2; //avoid overflow for big l and r
     mergesort(list, l , m);
     mergesort(list, m+1, r);
     merge(list, l, m, r);
   }
+}
+
+void printArray(int A[], int size)
+{
+    int i;
+    for (i=0; i < size; i++)
+        printf("%d ", A[i]);
+    printf("\n");
 }
 
 int main(){
@@ -76,14 +77,19 @@ int main(){
   {
       fgets(string,sizeof(string),file); //gets input from file
       list[i] = atoi(string);            //convert to integer
+      //printf("%d\n",list[i]);
       i++;
   }
   fclose(file);
   int l = 0;
   int r = 99;
   mergesort(list,l,r);
-  for(i = 0; i < 100; i++){
-    printf("%d\n",list[i]);
+  FILE *f;
+  f = fopen("mergesort.txt","w");
+  for (i = 0; i < 100; i++)
+  {
+      fprintf(f,"%d\n",list[i]);
   }
+  fclose(f);
   return 0;
 }
