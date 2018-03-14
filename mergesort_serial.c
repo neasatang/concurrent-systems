@@ -1,4 +1,8 @@
 #include <stdio.h>
+#include <string.h>
+#include <time.h>
+
+struct timespec start, end;
 
 void merge(int arr[], int l, int m, int r)
 {
@@ -68,12 +72,12 @@ void printArray(int A[], int size)
 }
 
 int main(){
-  char string[6];
-  int list[100];
+  char string[12];
+  int list[1000000];
   int i = 0;
   FILE *file;
   file = fopen("file.txt","r");   //reads input from file
-  while(!feof(file) && i<100)
+  while(!feof(file) && i<1000000)
   {
       fgets(string,sizeof(string),file); //gets input from file
       list[i] = atoi(string);            //convert to integer
@@ -81,15 +85,22 @@ int main(){
       i++;
   }
   fclose(file);
+  clock_gettime(CLOCK_MONOTONIC_RAW, &start);
   int l = 0;
-  int r = 99;
+  int r = 1000000-1;
   mergesort(list,l,r);
+  clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+  double x = ((end.tv_sec - start.tv_sec) * 1000000 + (end.tv_nsec - start.tv_nsec) / 1000);
+printf("Time is: %f\n", x/1000000 );
+
   FILE *f;
   f = fopen("mergesort.txt","w");
-  for (i = 0; i < 100; i++)
+  for (i = 0; i < 1000000; i++)
   {
       fprintf(f,"%d\n",list[i]);
   }
   fclose(f);
+
+
   return 0;
 }
