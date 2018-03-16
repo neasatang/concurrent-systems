@@ -5,12 +5,12 @@
 
 struct timespec start, end;
 
-int linear_search(int list[], int search_var){
-	for(int i = 0; i<1000000; i++){
-		if(list[i]==search_var)
+int linear_search(int list[], int key){
+	int i;
+	for(i = 0; i<1000000; i++){
+		if(list[i]==key)
 		{
-			//printf("%d\n",list[i]);
-			return i;
+			return i;	//returns position of key
 		}
 	}
 	return -1;		//returns -1 if not found
@@ -18,29 +18,30 @@ int linear_search(int list[], int search_var){
 
 int main(){
 	int answer = 0;
-	int search_var = 123231;
+	int n = 1000000;
+	int key = 7;
 	char string[15];
-  int list[1000000];
+  int list[n]; //size of data
   int i = 0;
   FILE *file;
   file = fopen("file.txt","r");   //reads input from file
-  while(!feof(file) && i<1000000)
+  while(!feof(file) && i<n)
   {
     fgets(string,sizeof(string),file); //gets input from file
-		list[i] = atoi(string);			   //convert to integer
+		list[i] = atoi(string);			  		 //convert to integer
 		i++;
   }
 	fclose(file);
 
 	clock_gettime(CLOCK_MONOTONIC_RAW, &start);
-	answer = linear_search(list, search_var);
+	answer = linear_search(list, key);
 	if(answer == -1)
 	{
-		printf("%d is not found\n", search_var);
+		printf("%d is not found\n", key);
 	}
 	else
 	{
-		printf("%d is at index %d\n",search_var, answer);
+		printf("%d is at index %d\n",key, answer);
 	}
 
 	clock_gettime(CLOCK_MONOTONIC_RAW, &end);
