@@ -53,31 +53,24 @@ void merge(int arr[], int l, int m, int r)
     }
 }
 
-void mergesort(int list[], int l, int r){
+void merge_sort(int list[], int l, int r){
   if(l <r)
   {
     int m = l + (r-l)/2; //avoid overflow for big l and r
-    mergesort(list, l , m);
-    mergesort(list, m+1, r);
+    merge_sort(list, l , m);
+    merge_sort(list, m+1, r);
     merge(list, l, m, r);
   }
 }
 
-void printArray(int A[], int size)
-{
-    int i;
-    for (i=0; i < size; i++)
-        printf("%d ", A[i]);
-    printf("\n");
-}
-
 int main(){
   char string[12];
-  int list[1000000];
+  int n = 1000000; //size of data
+  int list[n];
   int i = 0;
   FILE *file;
   file = fopen("file.txt","r");   //reads input from file
-  while(!feof(file) && i<1000000)
+  while(!feof(file) && i<n)
   {
       fgets(string,sizeof(string),file); //gets input from file
       list[i] = atoi(string);            //convert to integer
@@ -87,15 +80,15 @@ int main(){
   fclose(file);
   clock_gettime(CLOCK_MONOTONIC_RAW, &start);
   int l = 0;
-  int r = 1000000-1;
-  mergesort(list,l,r);
+  int r = n-1;
+  merge_sort(list,l,r);
   clock_gettime(CLOCK_MONOTONIC_RAW, &end);
   double x = ((end.tv_sec - start.tv_sec) * 1000000 + (end.tv_nsec - start.tv_nsec) / 1000);
-printf("Time is: %f\n", x/1000000 );
+  printf("Time is: %f\n", x/1000000 );
 
   FILE *f;
   f = fopen("mergesort.txt","w");
-  for (i = 0; i < 1000000; i++)
+  for (i = 0; i < n; i++)
   {
       fprintf(f,"%d\n",list[i]);
   }
