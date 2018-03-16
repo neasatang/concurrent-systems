@@ -12,7 +12,7 @@ int main()
 		printf("Error opening file!\n");
 		exit(1);
 	}
-	for(i = 0; i <= 100; i++)
+	for(i = 0; i < 100; i++)
 	{
 		r=rand()%100;
 		fprintf(f, "%d\n", r);
