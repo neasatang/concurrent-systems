@@ -19,7 +19,7 @@ int linear_search(int list[], int key){
 int main(){
 	int answer = 0;
 	int n = 1000000;
-	int key = 7;
+	int key = 500000;
 	char string[15];
   int list[n]; //size of data
   int i = 0;
@@ -33,7 +33,8 @@ int main(){
   }
 	fclose(file);
 
-	clock_gettime(CLOCK_MONOTONIC_RAW, &start);
+	clock_gettime(CLOCK_MONOTONIC_RAW, &start); // start timer
+
 	answer = linear_search(list, key);
 	if(answer == -1)
 	{
@@ -44,9 +45,9 @@ int main(){
 		printf("%d is at index %d\n",key, answer);
 	}
 
-	clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+	clock_gettime(CLOCK_MONOTONIC_RAW, &end); // end timer
 	double x = ((end.tv_sec - start.tv_sec) * 1000000 + (end.tv_nsec - start.tv_nsec) / 1000);
-printf("Time is: %f\n", x/1000000 );
+	printf("Time is: %f\n", x/1000000 );
 
 	return 0;
 }

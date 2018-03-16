@@ -2,6 +2,7 @@
 #include <string.h>
 #include <time.h>
 #include <omp.h>
+#include <stdlib.h>
 
 struct timespec start, end;
 
@@ -98,10 +99,13 @@ void merge_sort(int list[], int l, int r, int threads){
 }
 
 int main(){
+  /* initialise variables */
   char string[15];
   int n = 1000000; //size of data
   int list[n];
   int i = 0;
+
+  /* read input from file */
   FILE *file;
   file = fopen("file.txt","r");   //reads input from file
   while(!feof(file) && i<n)
@@ -111,18 +115,18 @@ int main(){
       i++;
   }
   fclose(file);
-  clock_gettime(CLOCK_MONOTONIC_RAW, &start);
+
+  clock_gettime(CLOCK_MONOTONIC_RAW, &start); //start timer
   omp_set_nested(1);
   int l = 0;
   int r = n-1;
   int threads = 4;
   merge_sort(list,l,r, threads);
-
-  clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+  clock_gettime(CLOCK_MONOTONIC_RAW, &end); //end timer
   double x = ((end.tv_sec - start.tv_sec) * 1000000 + (end.tv_nsec - start.tv_nsec) / 1000);
   printf("Time is: %f\n", x/1000000 );
 
-
+  /* stores sorted array into a file*/
   FILE *f;
   f = fopen("mergesort.txt","w");
   for (i = 0; i < n; i++)
@@ -130,7 +134,6 @@ int main(){
       fprintf(f,"%d\n",list[i]);
   }
   fclose(f);
-
 
   return 0;
 }

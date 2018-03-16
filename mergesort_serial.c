@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include <stdlib.h>
 
 struct timespec start, end;
 
@@ -64,12 +65,15 @@ void merge_sort(int list[], int l, int r){
 }
 
 int main(){
+  /* initialise variables */
   char string[12];
   int n = 1000000; //size of data
   int list[n];
   int i = 0;
+
+  /* read input from file */
   FILE *file;
-  file = fopen("file.txt","r");   //reads input from file
+  file = fopen("file.txt","r");
   while(!feof(file) && i<n)
   {
       fgets(string,sizeof(string),file); //gets input from file
@@ -78,7 +82,8 @@ int main(){
       i++;
   }
   fclose(file);
-  clock_gettime(CLOCK_MONOTONIC_RAW, &start);
+
+  clock_gettime(CLOCK_MONOTONIC_RAW, &start); //start timer
   int l = 0;
   int r = n-1;
   merge_sort(list,l,r);
@@ -86,6 +91,8 @@ int main(){
   double x = ((end.tv_sec - start.tv_sec) * 1000000 + (end.tv_nsec - start.tv_nsec) / 1000);
   printf("Time is: %f\n", x/1000000 );
 
+
+  /* stores sorted array into a file*/
   FILE *f;
   f = fopen("mergesort.txt","w");
   for (i = 0; i < n; i++)

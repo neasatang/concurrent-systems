@@ -1,12 +1,3 @@
-clean_linear: rm -f linearsearch_parallel
-	rm -f linearsearch_serial
-
-clean_merge: rm -f mergesort_parallel
-	rm -f mergesort_serial
-
-clean_all: clean_linear
-	clean_merge
-
 start_program:
 	gcc -o random1000000 random1000000.c
 	./random1000000
@@ -20,7 +11,6 @@ compile_linearsearch_serial:
 
 compile_linearsearch_parallel:
 	gcc -fopenmp -o linearsearch_parallel linearsearch_parallel.c
-
 
 compile_mergesort_serial:
 	gcc -o mergesort_serial mergesort_serial.c
