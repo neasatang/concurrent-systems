@@ -90,20 +90,11 @@ void mergesort(int list[], int l, int r, int threads){
         }
       }
     }
-    else
+    else //does it in serial
     {
       serial_merge_sort(list, l, r);
     }
   }
-}
-
-
-void printArray(int A[], int size)
-{
-    int i;
-    for (i=0; i < size; i++)
-        printf("%d ", A[i]);
-    printf("\n");
 }
 
 int main(){
@@ -116,7 +107,6 @@ int main(){
   {
       fgets(string,sizeof(string),file); //gets input from file
       list[i] = atoi(string);            //convert to integer
-      //printf("%d\n",list[i]);
       i++;
   }
   fclose(file);
